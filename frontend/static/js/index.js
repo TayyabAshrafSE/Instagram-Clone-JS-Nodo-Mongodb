@@ -232,11 +232,6 @@ $(document).ready(function () {
         }
     });
 
-    // CHANGE THE PROFILE PICTURE
-    // $("#imageUpload").change(function () {
-    //     readURL(this);
-    // });
-
     // SHOW PROFILE INFO OF THE USER
 
     profileBtn.click(async function (evt) {
