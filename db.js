@@ -1,7 +1,7 @@
 import { MongoClient } from "mongodb";
 
 // DB host
-const DBuri = "mongodb://0.0.0.0:27017";
+const DBuri = "mongodb+srv://ammar5910s:Funnyb0y%401@cluster0.ky474lk.mongodb.net/";
 
 // Initialize client
 const DBClient = new MongoClient(DBuri);

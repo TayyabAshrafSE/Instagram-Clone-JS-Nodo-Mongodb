@@ -14,7 +14,42 @@ export default class extends AbstractView {
         <div class="search-results" style="display: none;">
         </div>
     </div>
-    
+    <div class="feed-container">
+        <div class="post">
+            <div class="post-header">
+                <div class="user-info">
+                    <div class="avatar"></div>
+                    <div class="user-details">
+                        <h4>John Doe</h4>
+                        <p>@johndoe</p>
+                    </div>
+                </div>
+                <div class="post-options">
+                    <i class="fas fa-ellipsis-h"></i>
+                </div>
+            </div>
+            <div class="post-image">
+                <img src="https://via.placeholder.com/500x300" alt="Post Image">
+            </div>
+            <div class="post-actions">
+                <div class="action-buttons">
+                    <button><i class="far fa-heart"></i> Like</button>
+                    <button><i class="far fa-comment"></i> Comment</button>
+                    <button><i class="far fa-share-square"></i> Share</button>
+                </div>
+                <div class="likes">
+                    <div class="avatar"></div>
+                    <p><strong>Jane Smith</strong> and <strong>5 others</strong> liked this post.</p>
+                </div>
+            </div>
+            <div class="post-comments">
+                <div class="comment-box">
+                    <input type="text" placeholder="Write a comment...">
+                    <button><i class="far fa-smile"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="stories">
     <div class="story-row">
         <div class="story card">

@@ -460,19 +460,19 @@ $(document).ready(function () {
         }
     });
 
-    btnFollow.click(async function() {
+    btnFollow.click(async function () {
         try {
             const misis = $('#other-profile-misis-text').text();
             const response = await fetch('/M00853622/toggle-follow/' + misis);
-            
+
             if (!response.ok) throw new Error("Something went wrong. Please try again later!");
-            
+
             const responseData = await response.json();
-    
+
             $(this).text(responseData.isFollowing ? 'Unfollow' : 'Follow');
-    
+
             Util.toast(responseData.status, responseData.message);
-    
+
             //loadCurrentUserFollowingList();
             loadCurrentUserStories();
         } catch (e) {
@@ -485,36 +485,40 @@ $(document).ready(function () {
         loadCurrentUserStories();
     }
 
-    stories.on('click', '.story', async function() {
+    stories.on('click', '.story', async function () {
         try {
             const response = await fetch('/M00853622/story/' + this.uuid);
-    
+
             if (!response.ok) throw new Error("Something went wrong. Please try again later!");
-    
+
             const responseData = await response.json();
-    
+
             viewStoryModalImage.attr('src', '/story/' + this.uuid + '.jpg');
-    
+
             viewStoryModalLike[0].uuid = this.uuid;
             viewStoryModalShare[0].uuid = this.uuid;
-    
+
             viewStoryModalDescription.text(responseData.description);
             viewStoryModalViews.text(responseData.viewCount);
             viewStoryModalLikes.text(responseData.likeCount);
             viewStoryModalShares.text(responseData.shareCount);
-            
+
             if (responseData.isLiked) {
                 viewStoryModalLike.text('❤');
             } else {
                 viewStoryModalLike.text('♡︎');
             }
-    
+
             viewStoryModal.addClass('visible');
         } catch (e) {
             console.log(e);
             this.toast('error', e.message);
         }
     });
+
+    if (location.pathname == "/messege") {
+        loadCurrentUserFollowingList();
+    }
 });
 
 
@@ -573,6 +577,8 @@ const loadCurrentUserData = async () => {
 
 const loadCurrentUserFollowingList = async () => {
     try {
+        const followingList = $('.chat-list');
+
         const response = await fetch('/M00853622/following-list');
 
         if (!response.ok) throw new Error('Something went wrong. Please try again later!');
@@ -583,27 +589,28 @@ const loadCurrentUserFollowingList = async () => {
 
         responseData.forEach(following => {
 
-            const newCard = $('<div class="card flex ai-c"></div>');
-            const newProfileId = $('<div class="profile-id"></div>');
-            const newProfileImage = $('<div class="profile-image"></div>');
-            const newProfileDetails = $('<div class="profile-details"></div>');
-            const newProfileName = $('<div class="profile-name"></div>');
-            const newProfileStatus = $('<div class="profile-status"></div>');
-            const newProfileMessage = $('<a class="profile-message c-p"></a>');
+            const newCard = $('<div class="chat-item"></div>');
+            //const newProfileId = $('<div class="profile-id"></div>');
+            const newProfileImage = $('<div class="avatar"></div>');
+            const newProfileDetails = $('<div class="chat-info"></div>');
+            const newProfileName = $('<h4></h4>');
+            const newProfileStatus = $('<p></p>');
+            //const newProfileMessage = $('<a class="profile-message c-p"></a>');
 
-            newCard.append(newProfileId);
-            newCard.append(newProfileMessage);
-            newProfileId.append(newProfileImage);
-            newProfileId.append(newProfileDetails);
+            //newCard.append(newProfileId);
+            //newCard.append(newProfileMessage);
+            //newProfileId.append(newProfileDetails);
             newProfileDetails.append(newProfileName);
             newProfileDetails.append(newProfileStatus);
-
+            
             newProfileName.text(following.user[0].fullName);
             newProfileStatus.html(following.user[0].status?.replace(/(.*) \*(.*)\*$/, '$1 <b>$2<\/b>'));
-
-            newProfileMessage[0].misis = following.user[0].misis;
-            newProfileMessage[0].fullName = following.user[0].fullName;
-            newProfileMessage.text('💬');
+            
+            newCard.append(newProfileImage);
+            newCard.append(newProfileDetails);
+            newCard[0].misis = following.user[0].misis;
+            newCard[0].fullName = following.user[0].fullName;
+            // newProfileMessage.text('💬');
 
             const img = new Image();
             img.alt = following.user[0].fullName + '\'s profile image';
@@ -622,7 +629,7 @@ const loadCurrentUserFollowingList = async () => {
                 }
             }
 
-            newProfileId[0].misis = following.user[0].misis;
+            //newProfileId[0].misis = following.user[0].misis;
             followingList.append(newCard);
         });
     } catch (e) {
